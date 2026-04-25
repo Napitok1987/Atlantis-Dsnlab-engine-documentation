@@ -22,6 +22,11 @@ Current status:
 - a mechanics-only executable regression test layer exists;
 - further work should be outside the frozen `as-is` layer: publication and the normalized `to-be` layer.
 
+Structure:
+
+- `as-is/` - canonical description of the original game.
+- `reference/` - full source-backed reference tables.
+
 Key `as-is` documents:
 
 - [00-overview.md](as-is/00-overview.md)
@@ -40,3 +45,10 @@ Key `as-is` documents:
 - [13-world-and-npc.md](as-is/13-world-and-npc.md)
 - [appendix-data-tables.md](as-is/appendix-data-tables.md)
 - [appendix-server-specific-deviations.md](as-is/appendix-server-specific-deviations.md)
+
+Reference tables:
+
+- [reference/README.md](reference/README.md)
+- [reference/skills.md](reference/skills.md)
+- [reference/items.md](reference/items.md)
+- [reference/spells.md](reference/spells.md)

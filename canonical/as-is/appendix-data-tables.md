@@ -22,6 +22,10 @@
 
 - [03-skills.md](03-skills.md)
 
+Полная справочная таблица:
+
+- [../reference/skills.md](../reference/skills.md)
+
 Связанные документы:
 
 - [10-combat.md](10-combat.md)
@@ -32,6 +36,10 @@
 Основной документ:
 
 - [04-items.md](04-items.md)
+
+Полная справочная таблица:
+
+- [../reference/items.md](../reference/items.md)
 
 Связанные документы:
 
@@ -137,6 +145,10 @@
 - [13-world-and-npc.md](13-world-and-npc.md)
 
 ## Magic Tables
+
+Полная справочная таблица магических навыков и заклинаний:
+
+- [../reference/spells.md](../reference/spells.md)
 
 ## Passive Magic Summary
 
@@ -251,6 +263,6 @@
 
 ## Appendix Policy
 
-Если в будущем понадобится "полная машинная таблица" по skills, items, monsters или terrain, её лучше добавлять сюда отдельными секциями, не раздувая основные narrative-документы.
+Полные справочные таблицы по skills, items и spells вынесены в [../reference/README.md](../reference/README.md), чтобы не раздувать основные narrative-документы.
 
-Но на текущем этапе канонический комплект уже распределяет полные поведенческие описания по профильным документам, а этот appendix служит для быстрой навигации и сверки ключевых чисел.
+Этот appendix остаётся быстрым индексом по ключевым числам и сводным таблицам.

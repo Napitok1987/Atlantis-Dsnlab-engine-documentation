@@ -61,3 +61,9 @@ The Russian corpus contains the full detailed data notes. This English appendix 
 - [01-turn-processing.md](01-turn-processing.md)
 - [11-magic.md](11-magic.md)
 - [appendix-server-specific-deviations.md](appendix-server-specific-deviations.md)
+
+## Full Reference Tables
+
+- [../reference/skills.md](../reference/skills.md)
+- [../reference/items.md](../reference/items.md)
+- [../reference/spells.md](../reference/spells.md)

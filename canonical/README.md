@@ -17,6 +17,7 @@
 Структура:
 
 - `as-is/` — каноническое описание оригинальной игры;
+- `reference/` — полные справочные таблицы из исходного кода.
 
 Текущий статус:
 
@@ -45,3 +46,10 @@
 - `13-world-and-npc.md`
 - `appendix-data-tables.md`
 - `appendix-server-specific-deviations.md`
+
+Справочные таблицы:
+
+- `reference/README.md`
+- `reference/skills.md`
+- `reference/items.md`
+- `reference/spells.md`
