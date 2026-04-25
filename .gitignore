@@ -1,0 +1,18 @@
+__pycache__/
+*.py[cod]
+tests/_runtime_tmp/
+tests/runtime_*/
+
+# Local working/source materials not included in the publication package.
+commands.md
+items.md
+items_system.md
+objects.md
+skills.db.md
+skills.md
+terrain.md
+research/
+en/research/
+Спецификация/
+Правила DSNlab.md
+Ответы на вопросы игроков (старый ДСН).md
