@@ -22,10 +22,6 @@ Current status:
 - a mechanics-only executable regression test layer exists;
 - further work should be outside the frozen `as-is` layer: publication and the normalized `to-be` layer.
 
-Status document:
-
-- [coverage-status.md](coverage-status.md)
-
 Key `as-is` documents:
 
 - [00-overview.md](as-is/00-overview.md)
