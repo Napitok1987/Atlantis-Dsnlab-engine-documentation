@@ -2,7 +2,26 @@
 
 ## Статус
 
-Заморожено (механически завершено)
+Заморожено (механически завершено).
+
+Уточнено по локальным исходникам DSNlab после первичной AS IS фиксации.
+
+Канонические участки исходного кода для этого документа:
+
+- `DSNAtlantis-src/standard/world.cpp`:
+  `CreateNPCFactions`, `CreateCityMon`, `AdjustCityMons`, `AdjustCityMon`,
+  `MakeWMon`, `MakeLMon`;
+- `DSNAtlantis-src/npc.cpp`:
+  `CreateCityMons`, `CreateWMons`, `CreateLMons`, `GrowWMons`, `GrowLMons`;
+- `DSNAtlantis-src/aregion.cpp`:
+  `LairCheck`, `MakeLair`, `IsGuarded`, `IsGuarded1`, `CountWMons`;
+- `DSNAtlantis-src/standard/rules.cpp`:
+  `Globals`, `TerrainDefs`, `ObjectDefs`, `MonDefs`, monster item definitions;
+- `DSNAtlantis-src/unit.cpp`:
+  `MakeWMon`, `SetMonFlags`.
+
+Если текстовые AS IS заметки и эти исходники расходятся, для канонических механик старого
+Atlantis приоритет имеет поведение исходников.
 
 ## Назначение
 
@@ -383,6 +402,11 @@ Shaft не создаётся, если:
 - `Observation 15`;
 - `BEHIND`.
 
+Важная деталь: при первичном `CreateCityMon` используется skilllevel `14`, поэтому стартовый
+отряд создаётся как `560`. При последующем `AdjustCityMon` для Nexus/starting city используется
+`towntype = TOWN_CITY + 12`, а формулы роста и cap считают `(towntype + 1)`, то есть `15`.
+Поэтому уже существующая стартовая стража после post-turn дорастает шагом `60` к пределу `600`.
+
 Это очень сильная защита стартовых зон, но не отдельный флаг safe-region.
 
 ### Общие свойства отряда стражи
@@ -437,6 +461,13 @@ Shaft не создаётся, если:
 
 - ветка `GUARD_REGEN` используется только когда в регионе одновременно нет `U_GUARD` и нет любого другого текущего `GUARD_GUARD`;
 - наличие уже существующего `U_GUARD`, даже если это нестандартный или "сломанный" отряд стражи, переводит сервер в ветку `AdjustCityMon`, а не в ветку создания новой группы.
+
+Практический пример для Nexus/starting city:
+
+- если `U_GUARD` полностью отсутствует, новая группа при срабатывании `GUARD_REGEN` создаётся
+  как `10%` от `40 * 14`, то есть `56`;
+- если `U_GUARD` существует, но в нём `0` людей, применяется `AdjustCityMon`, и он вырастает
+  на `60` людей за ход.
 
 При стандартных настройках:
 
@@ -529,6 +560,17 @@ Sector:
 
 - примерно половина от стандартного `MonDefs[number]`, с случайным разбросом.
 
+Точные `wmonfreq`, `smallmon`, `humanoid`, `bigmon`, `lairChance` и допустимые lair object
+types задаются в `TerrainDefs`. Сводная таблица вынесена в
+[appendix-data-tables.md](appendix-data-tables.md#terrain-monster-and-lair-table).
+
+Созданный wandering monster stack получает `U_WMON` и проходит через `Unit::SetMonFlags()`:
+
+- `guard = GUARD_AVOID`;
+- `HOLDING = 1`.
+
+То есть wandering monsters не стоят в `GUARD_GUARD` сами по себе.
+
 ## Lairs и lair monsters
 
 ## Появление lairs
@@ -601,6 +643,16 @@ Sector:
 ### Обычные lairs
 
 Обычные lairs создают один monster stack стандартного типа местности с обычным случайным размером.
+
+Lair monsters тоже создаются через `MakeWMon`, поэтому получают те же monster flags:
+
+- `type = U_WMON`;
+- `guard = GUARD_AVOID`;
+- `HOLDING = 1`.
+
+Это важное отличие от упрощённой трактовки "монстры в логове стоят на guard": в исходниках они
+сидят внутри object-lair и избегают боя через `GUARD_AVOID`, а не делают регион guarded через
+`GUARD_GUARD`.
 
 ## Поведение монстров относительно городов
 

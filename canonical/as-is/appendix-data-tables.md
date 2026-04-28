@@ -247,6 +247,56 @@
 | Wandering Monsters | `GrowWMons(50)` | `GrowWMons(10)` |
 | Lair Monsters | `GrowLMons(50)` | `GrowLMons(10)` |
 
+## Terrain Monster And Lair Table
+
+Источник: `DSNAtlantis-src/standard/rules.cpp`, таблица `TerrainDefs`.
+
+Коды monster items приведены в исходных четырёхбуквенных сокращениях. `bigmon = -` означает, что
+terrain не имеет отдельного большого wandering monster.
+
+| Terrain | `wmonfreq` | `smallmon` | `humanoid` | `bigmon` | `lairChance` | Lair object slots |
+| --- | ---: | --- | --- | --- | ---: | --- |
+| `ocean` | `0` | `-` | `-` | `-` | `0` | `-` |
+| `plain` | `1` | `LION` | `CENT` | `-` | `3` | `RUIN`, `CRYPT` |
+| `forest` | `2` | `WOLF` | `KOBO` | `TREN` | `3` | `LAIR`, `RUIN`, `CRYPT` |
+| `mountain` | `2` | `GRIZ` | `OGRE` | `ROC` | `3` | `LAIR`, `RUIN`, `CAVE`, `CRYPT` |
+| `swamp` | `2` | `CROC` | `LMAN` | `BOGT` | `3` | `LAIR`, `RUIN`, `CRYPT` |
+| `jungle` | `2` | `ANAC` | `WMAN` | `KONG` | `3` | `LAIR`, `RUIN`, `CRYPT` |
+| `desert` | `2` | `SCOR` | `SAND` | `SPHI` | `3` | `LAIR`, `RUIN`, `CRYPT` |
+| `tundra` | `2` | `POLA` | `YETI` | `ICEW` | `3` | `LAIR`, `RUIN`, `CRYPT` |
+| `cavern` | `3` | `GRAT` | `GOBL` | `DRAG` | `5` | `LAIR`, `RUIN`, `CAVE` |
+| `underforest` | `3` | `GSPI` | `TROL` | `DRAG` | `5` | `LAIR`, `RUIN`, `CAVE` |
+| `tunnels` | `5` | `GLIZ` | `ETTI` | `DRAG` | `5` | `LAIR`, `RUIN`, `CAVE`, `DPIT` |
+| `nexus` | `0` | `-` | `-` | `-` | `0` | `-` |
+
+Wandering monster selection:
+
+- стартовый выбор: `smallmon`;
+- затем с шансом `1/2` заменяется на `humanoid`;
+- затем, если `bigmon` существует, с шансом `1/8` заменяется на `bigmon`.
+
+Lair creation:
+
+- каждый lair object slot проверяется последовательно с тем же `lairChance`;
+- при первом успехе создаётся один object, остальные slots не проверяются;
+- town-регионы lair не получают.
+
+## Lair Object Monster Table
+
+Источник: `DSNAtlantis-src/standard/rules.cpp`, таблица `ObjectDefs`, и
+`DSNAtlantis-src/standard/world.cpp`, `MakeLMon`.
+
+| Object | Базовый monster | Уточнение при создании stack |
+| --- | --- | --- |
+| `LAIR` | `TREN` | `TREN` заменяется на local terrain `bigmon` |
+| `RUIN` | `CENT` | `CENT` заменяется на local terrain `humanoid` |
+| `CAVE` | `DRAG` | создаёт обычный `DRAG` stack |
+| `DPIT` / `Demon Pit` | `IMP` | создаёт смешанный demon stack: `IMP`, возможно `DEMO`, возможно `BALR` |
+| `CRYPT` | `SKEL` | создаёт смешанный undead stack: `SKEL`, возможно `UNDE`, возможно `LICH` |
+
+Все эти stacks создаются через `Unit::MakeWMon`, поэтому получают `type = U_WMON`,
+`guard = GUARD_AVOID` и `HOLDING = 1`.
+
 ## Reporting Markers
 
 | Маркер | Значение |
